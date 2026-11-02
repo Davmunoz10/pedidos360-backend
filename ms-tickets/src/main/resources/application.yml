@@ -1,0 +1,41 @@
+server:
+  port: 8083
+spring:
+  application:
+    name: ms-tickets
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: https://login.microsoftonline.com/${AZURE_TENANT_ID}/v2.0
+  rabbitmq:
+    addresses: ${RABBITMQ_ADDRESSES:localhost:5672,localhost:5673}
+    host: ${RABBITMQ_HOST:localhost}
+    port: 5672
+    username: ${RABBITMQ_USER:pedidos}
+    password: ${RABBITMQ_PASSWORD:pedidos123}
+    listener:
+      simple:
+        acknowledge-mode: manual
+        default-requeue-rejected: false
+        prefetch: 1
+app:
+  security:
+    audience: ${AZURE_AUDIENCE}
+  rabbit:
+    exchanges:
+      pedidos: pedidos.exchange
+      dlx: pedidos.dlx
+    queues:
+      tickets: tickets.queue
+      documentos: documentos.queue
+    dlqs:
+      tickets: tickets.dlq
+      documentos: documentos.dlq
+    routing-keys:
+      tickets: pedido.creado
+      tickets-dlq: tickets.dlq
+      documentos: pedido.pagado
+      documentos-dlq: documentos.dlq
+    retry:
+      max-retries: 3

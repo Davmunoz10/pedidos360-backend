@@ -1,0 +1,37 @@
+server:
+  port: 8082
+spring:
+  application:
+    name: ms-notificaciones
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: https://login.microsoftonline.com/${AZURE_TENANT_ID}/v2.0
+  rabbitmq:
+    addresses: ${RABBITMQ_ADDRESSES:localhost:5672,localhost:5673}
+    host: ${RABBITMQ_HOST:localhost}
+    port: 5672
+    username: ${RABBITMQ_USER:pedidos}
+    password: ${RABBITMQ_PASSWORD:pedidos123}
+    listener:
+      simple:
+        acknowledge-mode: manual
+        default-requeue-rejected: false
+        prefetch: 1
+app:
+  security:
+    audience: ${AZURE_AUDIENCE}
+  rabbit:
+    exchanges:
+      pedidos: pedidos.exchange
+      dlx: pedidos.dlx
+    queues:
+      notificaciones: notificaciones.queue
+    dlqs:
+      notificaciones: notificaciones.dlq
+    routing-keys:
+      notificaciones: "pedido.*"
+      notificaciones-dlq: notificaciones.dlq
+    retry:
+      max-retries: 3
