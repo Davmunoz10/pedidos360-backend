@@ -21,10 +21,6 @@ import com.pedidos360.rabbitadmin.dto.Reglas;
 import com.pedidos360.rabbitadmin.exception.RecursoDuplicadoException;
 import com.pedidos360.rabbitadmin.exception.RecursoNoEncontradoException;
 
-/**
- * Unico lugar del microservicio que habla con RabbitMQ.
- * Crea, consulta y elimina colas, exchanges y bindings. Los controladores solo llaman a estos metodos.
- */
 @Service
 public class RabbitAdminService {
 
@@ -153,7 +149,6 @@ public class RabbitAdminService {
         }
     }
 
-    /** Devuelve los datos de la cola o null si no existe (declaracion pasiva: no crea nada). */
     private QueueInfoResponse consultarCola(String name) {
         return rabbitTemplate.execute(channel -> {
             try {

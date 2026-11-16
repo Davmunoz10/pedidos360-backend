@@ -32,7 +32,6 @@ public class PedidoController {
         this.productoRepo = productoRepo;
     }
 
-    // Con JWT activo toma el email del token; sin JWT usa un usuario de prueba
     private String emailDe(Jwt jwt) {
         if (jwt == null) return "dev@local";
         String email = jwt.getClaimAsString("preferred_username");
@@ -60,7 +59,6 @@ public class PedidoController {
             if (d.getCantidad() == null || d.getCantidad() <= 0) {
                 throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Cantidad inválida");
             }
-            // El precio se toma de la BD, nunca del cliente
             Producto p = productoRepo.findById(d.getProductoId())
                     .orElseThrow(() -> new ResponseStatusException(
                             HttpStatus.BAD_REQUEST, "Producto no existe: " + d.getProductoId()));
@@ -70,13 +68,10 @@ public class PedidoController {
         }
         pedido.setTotal(total);
 
-        // Guardamos el pedido en la base de datos
         Pedido pedidoGuardado = pedidoRepo.save(pedido);
         
-        // Enviamos el evento del pedido creado hacia RabbitMQ usando el método correcto
         eventPublisher.publicarPedidoCreado(String.valueOf(pedidoGuardado.getId()));
 
-        // Retornamos la respuesta HTTP con el pedido creado
         return ResponseEntity.status(HttpStatus.CREATED).body(pedidoGuardado);
     }
 }

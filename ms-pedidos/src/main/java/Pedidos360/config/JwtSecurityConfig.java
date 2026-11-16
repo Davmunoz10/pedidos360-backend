@@ -60,13 +60,10 @@ public class JwtSecurityConfig {
         String issuer = "https://login.microsoftonline.com/" + tenantId + "/v2.0";
         String jwkSetUri = "https://login.microsoftonline.com/" + tenantId + "/discovery/v2.0/keys";
 
-        // Firma verificada con las claves públicas (JWKS) de Azure AD
         NimbusJwtDecoder decoder = NimbusJwtDecoder.withJwkSetUri(jwkSetUri).build();
 
-        // issuer + expiración + not-before
         OAuth2TokenValidator<Jwt> withIssuer = JwtValidators.createDefaultWithIssuer(issuer);
 
-        // audience: Azure v2 entrega el client id "a secas"; se acepta también el formato api://
         OAuth2TokenValidator<Jwt> withAudience = jwt -> {
             List<String> aud = jwt.getAudience();
             boolean ok = aud != null && (aud.contains(clientId) || aud.contains("api://" + clientId));
@@ -80,7 +77,6 @@ public class JwtSecurityConfig {
         return decoder;
     }
 
-    // claim "scp" -> SCOPE_xxx ; claim "roles" -> ROLE_xxx
     private JwtAuthenticationConverter jwtConverter() {
         JwtGrantedAuthoritiesConverter scopes = new JwtGrantedAuthoritiesConverter();
         scopes.setAuthoritiesClaimName("scp");

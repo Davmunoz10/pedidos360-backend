@@ -10,11 +10,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-/**
- * Topologia RabbitMQ de ms-notificaciones. Los nombres vienen de application.yml (app.rabbit.*).
- * Ruta: pedidos.exchange (topic) -> notificaciones.queue
- * Si el mensaje falla: pedidos.dlx (direct) -> notificaciones.dlq
- */
+
 @Configuration
 public class RabbitConfig {
 

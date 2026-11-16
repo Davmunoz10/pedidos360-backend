@@ -5,11 +5,6 @@ import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 
-/**
- * Datos para crear una cola.
- * durable: por defecto true. deadLetterExchange y deadLetterRoutingKey: opcionales (configuran la DLQ).
- * messageTtlMs: tiempo de vida de los mensajes en milisegundos (opcional).
- */
 public record QueueRequest(
         @NotBlank(message = "name es obligatorio")
         @Pattern(regexp = Reglas.NOMBRE_REGEX, message = "name " + Reglas.NOMBRE_MENSAJE)

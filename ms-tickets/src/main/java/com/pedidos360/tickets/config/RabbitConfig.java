@@ -10,11 +10,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-/**
- * Topologia RabbitMQ de ms-tickets. Los nombres vienen de application.yml (app.rabbit.*).
- * pedidos.exchange (topic) -> tickets.queue (pedido.creado) y documentos.queue (pedido.pagado)
- * Si el mensaje falla: pedidos.dlx (direct) -> tickets.dlq / documentos.dlq
- */
 @Configuration
 public class RabbitConfig {
 

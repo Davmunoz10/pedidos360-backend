@@ -32,7 +32,6 @@ public class ProductoController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    // Con JWT activo, solo el rol ADMIN puede crear (si no: 403)
     @PostMapping
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Producto> crear(@Valid @RequestBody Producto producto) {

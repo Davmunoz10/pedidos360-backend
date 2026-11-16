@@ -1,8 +1,5 @@
 package com.pedidos360.rabbitadmin.dto;
 
-/**
- * Reglas de validacion compartidas por los DTO y por el servicio.
- */
 public final class Reglas {
 
     private Reglas() {

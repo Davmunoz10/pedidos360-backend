@@ -18,9 +18,6 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import com.pedidos360.rabbitadmin.dto.ApiError;
 
-/**
- * Traduce las excepciones a respuestas HTTP con un formato unico (ApiError).
- */
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 

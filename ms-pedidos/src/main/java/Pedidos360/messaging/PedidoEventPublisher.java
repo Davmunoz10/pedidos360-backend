@@ -13,10 +13,6 @@ import org.springframework.stereotype.Component;
 
 import tools.jackson.databind.ObjectMapper;
 
-/**
- * Unico lugar de ms-pedidos que habla con RabbitMQ.
- * Si RabbitMQ falla, se registra el error pero NO se rompe el flujo del pedido.
- */
 @Component
 public class PedidoEventPublisher {
 
@@ -61,7 +57,6 @@ public class PedidoEventPublisher {
         }
     }
 
-    /** Solo para pruebas: publica un cuerpo que no es JSON valido. */
     public void publicarMensajeInvalido(String routingKey) {
         try {
             Message mensaje = MessageBuilder

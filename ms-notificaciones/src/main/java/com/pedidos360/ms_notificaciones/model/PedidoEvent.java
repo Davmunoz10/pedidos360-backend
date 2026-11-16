@@ -1,9 +1,5 @@
 package com.pedidos360.ms_notificaciones.model;
 
-/**
- * Evento que viaja por RabbitMQ.
- * modo: "ok" es lo normal. "temporal" e "invalido" se usan solo para probar errores.
- */
 public class PedidoEvent {
 
     private String pedidoId;

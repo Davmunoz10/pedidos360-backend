@@ -17,14 +17,6 @@ import tools.jackson.databind.ObjectMapper;
 import com.pedidos360.tickets.model.PedidoEvent;
 import com.rabbitmq.client.Channel;
 
-/**
- * Consumidor del dominio TICKETS con ACK manual.
- *  - OK                  -> basicAck
- *  - Mensaje invalido    -> basicNack sin requeue -> DLQ (reintentar no sirve)
- *  - Error temporal      -> reintento: se republica con header x-retry-count y se hace ACK al original
- *  - Reintentos agotados -> basicNack sin requeue -> DLQ
- * Todo NACK queda registrado en el log.
- */
 @Component
 public class TicketConsumer {
 
@@ -77,7 +69,6 @@ public class TicketConsumer {
     }
 
     private void procesar(PedidoEvent evento) {
-        // Gancho de pruebas: modo "temporal" simula la caida momentanea de un servicio externo.
         if ("temporal".equals(evento.getModo())) {
             throw new IllegalStateException("Fallo temporal simulado");
         }

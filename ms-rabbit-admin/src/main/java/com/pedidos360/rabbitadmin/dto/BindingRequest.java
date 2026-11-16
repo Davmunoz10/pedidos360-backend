@@ -3,9 +3,6 @@ package com.pedidos360.rabbitadmin.dto;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 
-/**
- * Datos para crear un binding entre un exchange y una cola.
- */
 public record BindingRequest(
         @NotBlank(message = "exchange es obligatorio")
         @Pattern(regexp = Reglas.NOMBRE_REGEX, message = "exchange " + Reglas.NOMBRE_MENSAJE)

@@ -20,17 +20,6 @@ import com.pedidos360.rabbitadmin.dto.QueueRequest;
 import com.pedidos360.rabbitadmin.service.RabbitAdminService;
 import jakarta.validation.Valid;
 
-/**
- * API REST para administrar RabbitMQ.
- *
- * POST   /admin/queues                                          crea una cola         (201, 400, 404, 409)
- * GET    /admin/queues/{name}                                   consulta una cola     (200, 404)
- * DELETE /admin/queues/{name}                                   elimina una cola      (204, 404)
- * POST   /admin/exchanges                                       crea un exchange      (201, 400, 409)
- * DELETE /admin/exchanges/{name}                                elimina un exchange   (204, 404)
- * POST   /admin/bindings                                        crea un binding       (201, 400, 404)
- * DELETE /admin/bindings?exchange=&queue=&routingKey=           elimina un binding    (204, 400, 404)
- */
 @RestController
 @RequestMapping("/admin")
 public class RabbitAdminController {

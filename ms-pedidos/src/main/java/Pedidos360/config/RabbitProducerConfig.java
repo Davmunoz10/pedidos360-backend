@@ -5,10 +5,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-/**
- * Configuracion RabbitMQ del productor (ms-pedidos).
- * El nombre del exchange viene de application.properties (app.rabbit.exchanges.pedidos).
- */
 @Configuration
 public class RabbitProducerConfig {
 
