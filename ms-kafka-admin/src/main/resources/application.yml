@@ -1,0 +1,20 @@
+server:
+  port: 8085
+spring:
+  application:
+    name: ms-kafka-admin
+  kafka:
+    bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS:localhost:9092,localhost:9093,localhost:9094}
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: https://login.microsoftonline.com/${AZURE_TENANT_ID:sin-tenant}/v2.0
+app:
+  security:
+    enabled: ${SECURITY_ENABLED:true}
+    audience: ${AZURE_AUDIENCE:sin-audience}
+  kafka:
+    admin:
+      timeout-seconds: 15
+      request-timeout-ms: 10000
