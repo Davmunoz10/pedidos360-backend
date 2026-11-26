@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 import org.springframework.beans.factory.annotation.Autowired;
 import Pedidos360.messaging.PedidoEventPublisher;
+import Pedidos360.kafka.PedidoEventoProducer;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -23,6 +24,9 @@ public class PedidoController {
 
     private final PedidoRepository pedidoRepo;
     private final ProductoRepository productoRepo;
+
+    @Autowired
+    private PedidoEventoProducer kafkaProducer;
 
     @Autowired
     private PedidoEventPublisher eventPublisher;
@@ -71,6 +75,7 @@ public class PedidoController {
         Pedido pedidoGuardado = pedidoRepo.save(pedido);
         
         eventPublisher.publicarPedidoCreado(String.valueOf(pedidoGuardado.getId()));
+        kafkaProducer.publicarPedidoCreado(String.valueOf(pedidoGuardado.getId()), pedidoGuardado.getClienteEmail(), pedidoGuardado.getTotal());
 
         return ResponseEntity.status(HttpStatus.CREATED).body(pedidoGuardado);
     }
